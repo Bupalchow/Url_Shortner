@@ -15,7 +15,6 @@ const UrlList=()=>{
     const [copied,setCopied] = useState<boolean>(false)
     const [copyUrl,setCopyUrl] = useState<string>('')
     const [urls, setUrls] = useState<Url[]>([])
-    const[isLoading,setIsLoading]= useState<boolean>(false)
     const shortenerUrl = (code:string)=>`${process.env.NEXT_PUBLIC_BASE_URL}/${code}`
     const handleCopy = (code: string)=>{
         const fullUrl = `${shortenerUrl(code)}`
@@ -29,15 +28,12 @@ const UrlList=()=>{
         })
     }
     const fetchUrls=async()=>{
-        setIsLoading(true)
         try{
             const response = await fetch('/api/fetchurls')
             const data = await response.json()
             setUrls(data)
         }catch(e){
             console.log('Error Url Fetch',e)
-        }finally{
-            setIsLoading(false)
         }
     }
 
